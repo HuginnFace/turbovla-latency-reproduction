@@ -5,7 +5,7 @@
 Clone/download this repository. With Python and NumPy installed:
 
 ```sh
-python verify_artifacts.py
+python scripts/verify_artifacts.py
 ```
 
 This checks all published-file hashes, all 566 NPZ hashes, episode counts, and recomputes the primary eager/graph and five-scope medians/p95s directly from the raw files. It does not run the model or establish fresh performance on another machine.
@@ -23,7 +23,7 @@ PROJECT/
   TurboVLA/                    # pinned upstream checkout
     pretrained/bert-base-uncased/
     pretrained/release/checkpoints/libero/turbovla_libero.pth
-    reproduction/              # copy this repository's .py scripts here
+    reproduction/              # copy the collection/benchmark .py files from scripts/ here
 ```
 
 Install upstream `third_party/vla_adapter` as required by its setup. Configure `LIBERO_CONFIG_PATH` for your own asset locations and the renderer (the original collection used OSMesa). Set `PYTHONPATH` to include the TurboVLA and LIBERO roots, `PYTHONNOUSERSITE=1`, `USE_TORCH=1`, `USE_TF=0`, `USE_FLAX=0`. Run all following commands from the upstream TurboVLA root in the prepared environment.
@@ -42,10 +42,10 @@ The scripts assert an RTX 4090 and reject detected foreign work on the selected 
 
 ```sh
 mkdir -p inputs-release
-for archive in /path/to/turbovla-latency-reproduction/observations-*.zip; do
+for archive in /path/to/turbovla-latency-reproduction/data/observations/observations-*.zip; do
   unzip -n "$archive" -d inputs-release
 done
-unzip -n /path/to/turbovla-latency-reproduction/episode-metadata.zip -d inputs-release
+unzip -n /path/to/turbovla-latency-reproduction/data/episode-metadata.zip -d inputs-release
 ```
 
 `inputs-release/inputs` is the `--inputs` directory below. Its task folders must contain both NPZ files and capture/result JSONs. The original 566 arrays are included; regenerating trajectories is optional and may not produce byte-identical arrays across different software/hardware.

@@ -18,7 +18,7 @@ The collector runs the released suite policy and stores the actual observation a
 
 Each NPZ contains `primary`, `wrist` (officially rotated images), actual `state`, `eef_pos`, `eef_quat`, `gripper_qpos`, exact `instruction`, canonical `actions`, `environment_step = 10 + 12 * policy_call`, and `policy_call`. There are 566 decisions: Spatial 88, Object 128, Goal 109, Long 241. All observations, including those from two unsuccessful episodes, are retained. No random synthetic observation is labeled an episode input.
 
-[EPISODES.md](EPISODES.md) lists every task/instruction. [episode-identities.json](episode-identities.json) additionally records the task BDDL, initial-state asset hash, selected row index, dtype, shape and SHA-256 of its contiguous array bytes. State identity hashes were added during publication by inspecting the same pinned LIBERO assets; they were not logged during the original collector run. NPZ hashes directly identify the original measured arrays.
+[EPISODES.md](EPISODES.md) lists every task/instruction. [episode-identities.json](../data/episode-identities.json) additionally records the task BDDL, initial-state asset hash, selected row index, dtype, shape and SHA-256 of its contiguous array bytes. State identity hashes were added during publication by inspecting the same pinned LIBERO assets; they were not logged during the original collector run. NPZ hashes directly identify the original measured arrays.
 
 ## Five timing boundaries
 

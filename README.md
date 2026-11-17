@@ -21,19 +21,34 @@ The synthetic number is the **median of three block medians**; real-observation 
 
 **The difference from the paper's 31.2 ms is unresolved.** We do not claim that CUDA Graph explains that difference: our ordinary approximately 11.5 ms run already has CUDA Graph OFF. Graph mode is a separate optional optimization experiment with a small capture-specific text-wrapper adaptation.
 
-## Contents
+## Repository layout
 
-- [PROTOCOL.md](PROTOCOL.md): timing boundaries, hardware, preprocessing, samples, aggregation, and validation.
-- [RESULTS.md](RESULTS.md): detailed comparisons, cache/pacing diagnostics, CUDA Graph verification, limitations.
-- [EPISODES.md](EPISODES.md), [episodes.csv](episodes.csv), [episode-identities.json](episode-identities.json): all 40 instructions, task IDs, initial states, hashes, decision counts, and success flags.
-- [summary.json](summary.json): the authors' official synthetic benchmark output (machine-specific identifiers redacted).
-- [replay-aggregate.json](replay-aggregate.json) and [graph-summary.json](graph-summary.json): full-precision results and checks.
-- `raw-evidence.zip`: original timing CSVs, summaries, manifests, runtime checks and GPU monitoring evidence. No timing outliers were removed.
-- `observations-01.zip` through `observations-05.zip`: **all 566 actual observation NPZs**, with [observation-hashes.json](observation-hashes.json). Extract all into one directory.
-- `episode-metadata.zip`: per-task capture/result metadata and available original command records. Extract alongside observations.
-- Python scripts in the repository root: collection, replay, cache diagnostics, CUDA Graph experiments, and offline verification.
-- [REPRODUCE.md](REPRODUCE.md): setup and commands; read before executing GPU experiments.
-- [provenance.json](provenance.json), [publication.patch](publication.patch), `SHA256SUMS`: original/published content hashes and publication edits.
+```text
+README.md                    # overview and main results
+SHA256SUMS                   # integrity manifest for published files
+docs/                        # protocol, results, episode table, reproduction guide
+scripts/                     # collection, benchmarks, diagnostics, offline verifier
+results/                     # official summary, aggregate results, raw timing archive
+data/                        # episode metadata, identities and observation hashes
+  observations/              # five archives containing all 566 observation arrays
+provenance/                  # measured/published hashes and publication patch
+```
+
+| Start here | Contents |
+|---|---|
+| [Detailed protocol](docs/PROTOCOL.md) | Hardware, timing boundaries, sampling, aggregation and validation |
+| [Results and limitations](docs/RESULTS.md) | Timing comparisons, cache/pacing diagnostics and CUDA Graph checks |
+| [Exact episode inventory](docs/EPISODES.md) | All 40 tasks, instructions and decision counts |
+| [Reproduction guide](docs/REPRODUCE.md) | Environment setup, extraction and execution commands |
+| [Official summary.json](results/summary.json) | Authors' synthetic benchmark output |
+| [Real-observation results](results/replay-aggregate.json) / [Graph results](results/graph-summary.json) | Full-precision aggregates and validation |
+| [Raw timing evidence](results/raw-evidence.zip) | CSVs, manifests, runtime checks and monitoring |
+| [Episode identities](data/episode-identities.json) / [CSV](data/episodes.csv) | Initial-state hashes, instructions, IDs and success flags |
+| [Observation archives](data/observations/) / [Metadata](data/episode-metadata.zip) | Original measured inputs; extract all archives into one directory |
+| [Scripts](scripts/) / [Offline verifier](scripts/verify_artifacts.py) | Collection, timing and integrity checks |
+| [Provenance](provenance/provenance.json) / [Publication patch](provenance/publication.patch) | Original and published content hashes and publication edits |
+
+From the repository root, run `python scripts/verify_artifacts.py` to verify the packaged evidence without a GPU.
 
 ## Scope and provenance
 

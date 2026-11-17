@@ -1,6 +1,6 @@
 # Exact episode inventory
 
-All task IDs are zero based; task order index 0, seed 7, benchmark initial-state index 0, one episode/task. See [episode-identities.json](episode-identities.json) for BDDL and initial-state file hashes, selected state dtype/shape/byte hash. `libero_10` is LIBERO-Long.
+All task IDs are zero based; task order index 0, seed 7, benchmark initial-state index 0, one episode/task. See [episode-identities.json](../data/episode-identities.json) for BDDL and initial-state file hashes, selected state dtype/shape/byte hash. `libero_10` is LIBERO-Long.
 
 | Suite | Task ID | Instruction | Decisions | Success |
 |---|---:|---|---:|---:|

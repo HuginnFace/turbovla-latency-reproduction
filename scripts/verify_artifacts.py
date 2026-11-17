@@ -2,15 +2,15 @@
 import csv,hashlib,io,json,zipfile
 from pathlib import Path
 import numpy as np
-root=Path(__file__).resolve().parent
+root=Path(__file__).resolve().parents[1]
 for line in (root/'SHA256SUMS').read_text().splitlines():
  digest,name=line.split('  ',1)
  assert hashlib.sha256((root/name).read_bytes()).hexdigest()==digest,name
-ident=json.loads((root/'episode-identities.json').read_text())
+ident=json.loads((root/'data/episode-identities.json').read_text())
 assert len(ident)==40 and sum(x['observations'] for x in ident)==566
 assert sum(x['successes'] for x in ident)==38
-expected={r['path']:r['sha256'] for r in json.loads((root/'observation-hashes.json').read_text())};seen=set()
-for p in sorted(root.glob('observations-*.zip')):
+expected={r['path']:r['sha256'] for r in json.loads((root/'data/observation-hashes.json').read_text())};seen=set()
+for p in sorted(root.glob('data/observations/observations-*.zip')):
  with zipfile.ZipFile(p) as z:
   for name in z.namelist():
    assert name not in seen and hashlib.sha256(z.read(name)).hexdigest()==expected[name],name
@@ -20,7 +20,7 @@ def compare(values,ref):
  assert len(values)==ref['n']
  assert abs(float(np.median(values))-ref['median_ms'])<1e-9
  assert abs(float(np.percentile(values,95))-ref['p95_ms'])<1e-9
-with zipfile.ZipFile(root/'raw-evidence.zip') as z:
+with zipfile.ZipFile(root/'results/raw-evidence.zip') as z:
  graph=json.loads(z.read('cuda-graph-clean/summary.json'))
  rows=list(csv.DictReader(io.StringIO(z.read('cuda-graph-clean/raw.csv').decode())))
  for mode,ref in graph['timings'].items():compare([float(r['ms']) for r in rows if r['mode']==mode],ref)
